@@ -4,23 +4,22 @@ from gender_guesser_br import Genero
 
 # Load the data
 data_names = pd.read_csv('br_ibge_nomes_brasil.csv')
-
 data_locals = pd.read_csv('br_bd_diretorios_brasil_municipio.csv')
 
-#criar tabela que relaciona os nomes com os locais
-main_df = pd.merge(data_names, data_locals, on='id_municipio')
+# create table that relates names and locals by the id_municipio
+names_locals_df = pd.merge(data_names, data_locals, on='id_municipio')
 
-print(main_df.loc[20, 'nome_x'])
-print(main_df.loc[20, 'nome_y'])
-print(main_df.loc[20, 'nome_uf'])
-print(main_df.loc[20, 'nome_regiao'])
-print(main_df.loc[20, 'quantidade_nascimentos_ate_2010'])
+# select only the columns that are needed for the final table
+name_location_table = names_locals_df[['nome_x', 'nome_y', 'nome_uf', 'nome_regiao', 'quantidade_nascimentos_ate_2010']]
 
-# Print the first 10 names
-#for line in range(0, 10):
-    # nome = data_names['nome'][line]
-    # genero = Genero(nome)
-    # print(nome, genero())
-    # print(data_locals['nome'][line])'
+#create a new colunm for the gender of the names
+name_location_table['genero'] = np.nan
 
+# associate the names to the gender
+for line in range(0, len(name_location_table)):
+    name = name_location_table['nome_x'][line]
+    genero = Genero(name)
+    name_location_table.loc[line, 'genero'] = genero()
+
+name_location_table.to_csv('nomes_locais.csv', sep=',', index=False)
 
