@@ -13,7 +13,7 @@ names_locals_df = pd.merge(data_names, data_locals, on='id_municipio')
 name_location_table = names_locals_df[['nome_x', 'nome_y', 'nome_uf', 'nome_regiao', 'quantidade_nascimentos_ate_2010']]
 
 #create a new colunm for the gender of the names
-name_location_table['genero'] = np.nan
+name_location_table['genero'] = None
 
 # associate the names to the gender
 for line in range(0, len(name_location_table)):
