@@ -15,6 +15,14 @@ name_location_table = names_locals_df[['nome_x', 'nome_y', 'nome_uf', 'nome_regi
 # Agrupar por 'nome' e 'nome_regiao', e somar a coluna 'quantidade_nascimentos'
 grouped_df = name_location_table.groupby(['nome_x', 'nome_regiao'])['quantidade_nascimentos_ate_2010'].sum().reset_index()
 
+name_old = grouped_df['nome_x'][0]
+
+for line in len(grouped_df):
+    name_new = line['nome_x']
+    
+    if name_new == name_old:
+        
+
 #create a new colunm for the gender of the names
 name_location_table['genero'] = None
 
